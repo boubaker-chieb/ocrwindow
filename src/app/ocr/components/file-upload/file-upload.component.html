@@ -1,0 +1,92 @@
+<div class="container py-5">
+  <!-- For demo purpose -->
+  <header class="text-secondary text-center">
+    <h1 class="display-4">Ocr Window</h1>
+    <h1 class="display-5">Image to text converter</h1>
+    <p class="lead mb-0">
+      We present an online OCR (Optical Character Recognition) service to
+      extract text from images. Upload your photo to our image to text
+      converter, click on submit and get your text file instantly.
+    </p>
+  </header>
+  <form [formGroup]="form" (submit)="(submit())">
+  <div class="row py-4">
+      <div class="col-lg-5 mx-auto my-auto">
+        <!-- Upload image input-->
+        <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+          <input
+            id="upload"
+            type="file"
+            formControlName="file"
+            accept=".gif,.jpg,.jpeg,.png"
+            (change)="handleFileChange($event)"
+            class="form-control border-0"
+          />
+          <label
+            id="upload-label"
+            for="upload"
+            class="font-weight-light text-muted"
+            >
+            @if (!file) {
+              <span>Choose file</span>
+            }
+            @else {
+              <span>{{file}}</span>
+            }
+            </label
+          >
+          <div class="input-group-append">
+            <label for="upload" class="btn btn-light m-0 rounded-pill px-4">
+              <i class="fa fa-cloud-upload mr-2 text-muted"></i
+              ><small class="text-uppercase font-weight-bold text-muted"
+                >Choose file</small
+              ></label
+            >
+          </div>
+        </div>
+        <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+          <select
+            class="form-control text-secondary"
+            formControlName="language"
+            style="width: 100%; border: 0"
+            tabindex="-1"
+            aria-hidden="true"
+            id="selectLanguage"
+          >
+            @for(lang of languages; track index; let index=$index){
+            <option [value]="lang.code">{{ lang.data}}</option>
+            }
+          </select>
+        </div>
+        <div class="input-group px-2 py-2">
+          <button class="btn btn-lg btn-outline-secondary w-100" type="submit" [disabled]="!form.valid">
+            Submit
+          </button>
+        </div>
+        <!-- /.form-group -->
+      </div>
+      <div class="col-lg-1 mx-auto">
+        <div class="d-flex border-left" style="height: 100%"></div>
+      </div>
+      <div class="col-lg-5 mx-auto">
+        <!-- Uploaded image area-->
+        <p class="font-italic text-secondary text-center">
+          The image uploaded will be rendered inside the box below.
+        </p>
+        <div class="image-area mt-4">
+          <img
+            id="imageResult"
+            [src]="imgSrc"
+            alt=""
+            class="img-fluid rounded shadow-sm mx-auto d-block img-thumbnail"
+          />
+        </div>
+        <div class="form-group mb-3 px-2 py-2 rounded-pill bg-white">
+          <textarea rows="5" style="max-height: 300vh;" class="form-control" disabled>
+          {{text}}
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
